@@ -20,20 +20,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="mt-5 mb-3">View Record</h1>
+                    <h1 class="mt-5 mb-3">Détails du fichier TXT</h1>
                     <div class="form-group">
-                        <label>Name</label>
-                        <p><b><?php echo $row["name"]; ?></b></p>
+                        <label>Nom</label>
+                        <p><b><?php echo $row["nom"]; ?></b></p>
                     </div>
                     <div class="form-group">
-                        <label>Address</label>
-                        <p><b><?php echo $row["address"]; ?></b></p>
+                        <label>Date Ajout</label>
+                        <p><b><?php echo $row["dateAjout"]; ?></b></p>
                     </div>
                     <div class="form-group">
-                        <label>Salary</label>
-                        <p><b><?php echo $row["salary"]; ?></b></p>
+                        <label>Contenu : </label>
+                        <?php
+                        $fichier = '../Files/'.$row["nom"];
+                        $text = file_get_contents($fichier); 
+                        echo $text; 
+                        ?> 
                     </div>
-                    <p><a href="index.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="../index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>

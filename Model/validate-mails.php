@@ -9,10 +9,14 @@
       given email to verify whether it really exists or not    
 
  **/
- 
+
 function isValidEmail($email){
+   // Include config file
+ require_once "config.php";
    $result=false;
    
+   $dateVerif = date("l jS \of F Y h:i:s A");
+
    # BASIC CHECK FOR EMAIL PATTERN WITH REGULAR EXPRESSION
    if(!preg_match('/^[_A-z0-9-]+((\.|\+)[_A-z0-9-]+)*@[A-z0-9-]+(\.[A-z0-9-]+)*(\.[A-z]{2,4})$/',$email))
 	   return $result;
@@ -83,14 +87,47 @@ function isValidEmail($email){
 
       if($code == '250') {
         #you received 250 so the email address was accepted
+        $statut="valide";
         $result=true;
       }elseif($code == '451' || $code == '452') {
         #you received 451 so the email address was greylisted
         #_(or some temporary error occured on the MTA) - so assume is ok
+        $statut="valide";
         $result=true;
       }else{
+        $statut="non valide";
         $result=false;
       }
+
+      
+
+      // Prepare an insert statement
+      $sql = "INSERT INTO emails (email, fichierSource, domaine, codeRetour, statut, dateVerif) VALUES (?, ?, ?, ?, ?, ?)";
+         
+      if($stmt = mysqli_prepare($link, $sql)){
+          // Bind variables to the prepared statement as parameters
+          mysqli_stmt_bind_param($stmt, "ssssss", $param_email, $param_fichier, $param_domaine, $param_code, $param_statut, $param_date);
+          
+          // Set parameters
+          $param_email = $email;
+          $param_fichier = "emails3.txt";
+          $param_domaine = $domain;
+          $param_code = $code;
+          $param_statut = $statut;  
+          $param_date = $dateVerif;
+          // Attempt to execute the prepared statement
+          if(mysqli_stmt_execute($stmt)){
+              // Records created successfully. Redirect to landing page
+              header("location: ../index.php");
+              exit();
+          } else{
+              echo "Oops! Something went wrong. Please try again later.";
+          }
+      }
+      // Close statement
+      mysqli_stmt_close($stmt);
+      // Close connection
+      mysqli_close($link);
 
       #quit smtp connection
       $msg="quit";
@@ -106,11 +143,19 @@ function isValidEmail($email){
 	 
 }
 
-$email='test1221s@gmail.com';
+$myfile = fopen("../Files/emails3.txt", "r") or die("Unable to open file!");
 
-if(isValidEmail($email))
-  echo "**** EMAIL EXISTS ****";
-else
-  echo "**** NOT A VALID EMAIL ****";
+while(!feof($myfile)) {
+  $line = fgets($myfile);
+  $email = rtrim($line,"\n");
+  if(isValidEmail($email))
+    echo "**** EMAIL EXISTS ****";
+  else
+    echo "**** NOT A VALID EMAIL ****";
+}
+fclose($myfile);
+
+
+
 
 ?>

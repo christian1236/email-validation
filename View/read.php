@@ -30,13 +30,34 @@
                         <p><b><?php echo $row["dateAjout"]; ?></b></p>
                     </div>
                     <div class="form-group">
-                        <label>Contenu : </label>
+                        <label>Contenu : </label></br>
                         <?php
                         $fichier = '../Files/'.$row["nom"];
                         $text = file_get_contents($fichier); 
                         echo $text; 
                         ?> 
                     </div>
+                    <div class="form-group">
+                    <a href="./indexOneFile.php" class="btn btn-primary" type="button">
+                        emails </br>
+                        <h2><span class="badge">5</span></h2>
+                    </a>
+                    <button class="btn btn-success" type="button">
+                        valides </br>
+                        <h2><span class="badge">5</span></h2>
+                    </button>
+                    <button class="btn btn-danger" type="button">
+                        Non valides </br>
+                        <h2><span class="badge">5</span></h2>
+                    </button>
+                    <button class="btn btn-warning" type="button">
+                        Inconnus </br>
+                        <h2><span class="badge">5</span></h2>
+                    </button>
+                
+                    </div>
+                    </br>
+                    </br>
                     <p><a href="../index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        

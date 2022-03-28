@@ -29,43 +29,38 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Fichiers d'emails</h2>
-                        <form action="./Model/upload.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="btn btn-success pull-right">
-                            <br/>
-                            <br/>
-                            <br/>
-                            <input type="submit" value="Upload TXT" name="submit" class="btn btn-success pull-right">
-                        </form>
-                       
+                        <h2 class="pull-left">Emails</h2>
                     </div>
                     <?php
                     // Include config file
-                    require_once "./Model/config.php";
+                    require_once "../Model/config.php";
                     
                     // Attempt select query execution
-                    $sql = "SELECT * FROM files";
+                    $sql = "SELECT * FROM emails";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
                             echo '<table class="table table-bordered table-striped">';
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
-                                        echo "<th>Nom</th>";
-                                        echo "<th>Date Ajout</th>";
+                                        echo "<th>email</th>";
+                                        echo "<th>fichier source</th>";
+                                        echo "<th>domaine</th>";
+                                        echo "<th>code de retour</th>";
+                                        echo "<th>statut</th>";
+                                        echo "<th>date de vérification</th>";
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['nom'] . "</td>";
-                                        echo "<td>" . $row['dateAjout'] . "</td>";
-                                        echo "<td>";
-                                            echo '<a href="./View/read.php?id='. $row['id'] .'" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="./View/update.php?id='. $row['id'] .'" class="mr-3" title="Valider les emails Record" data-toggle="tooltip"><span class="fa fa-refresh"></span></a>';
-                                            echo '<a href="./View/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
-                                        echo "</td>";
+                                        echo "<td>" . $row['email'] . "</td>";
+                                        echo "<td>" . $row['fichierSource'] . "</td>";
+                                        echo "<td>" . $row['domaine'] . "</td>";
+                                        echo "<td>" . $row['codeRetour'] . "</td>";
+                                        echo "<td>" . $row['statut'] . "</td>";
+                                        echo "<td>" . $row['dateVerif'] . "</td>";
                                     echo "</tr>";
                                 }
                                 echo "</tbody>";                            
@@ -82,7 +77,13 @@
                     // Close connection
                     mysqli_close($link);
                     ?>
+                    <p><a href="./read.php?id=1" class="btn btn-primary">Back</a></p>
+
+
+
+
                 </div>
+                
             </div>        
         </div>
     </div>

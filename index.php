@@ -47,7 +47,7 @@
                     $sql = "SELECT * FROM files";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
-                            echo '<table class="table table-bordered table-striped">';
+                            echo '<table class="table table-bordered table-striped bg-light border shadow mb-5 bg-white rounded">';
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";

@@ -10,8 +10,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .wrapper{
-            width: 600px;
-            margin: 0 auto;
+            width: 900px;
+            margin: auto ;
         }
         table tr td:last-child{
             width: 120px;
@@ -29,6 +29,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
+                    <p><a href="./read.php?id=1" class="btn btn-primary">Back</a></p>
                         <h2 class="pull-left">Emails</h2>
                     </div>
                     <?php
@@ -39,7 +40,7 @@
                     $sql = "SELECT * FROM emails";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
-                            echo '<table class="table table-bordered table-striped">';
+                            echo '<table class="table table-bordered table-striped bg-light border shadow mb-5 bg-white rounded">';
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>#</th>";
@@ -77,8 +78,7 @@
                     // Close connection
                     mysqli_close($link);
                     ?>
-                    <p><a href="./read.php?id=1" class="btn btn-primary">Back</a></p>
-
+                    
 
 
 

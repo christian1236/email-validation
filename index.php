@@ -1,3 +1,8 @@
+<?php
+    //On démarre une nouvelle session
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,18 +29,56 @@
     </script>
 </head>
 <body>
+    <?php
+        include './View/navbar.php';
+    ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Fichiers d'emails</h2>
+                            <h2 class="pull-left">Valider un email</h2>
+                    <form action="./Model/validate-one-mail.php" method="post" enctype="multipart/form-data">
+                        <div class="form-group mx-sm-3 mb-2">
+                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                            <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais vos information à qui que ce soit.</small>
+                            <button type="submit" class="btn btn-primary mb-2 pull-right">Vérifier</button>
+                        </div>
+
+                        <br/>
+                        <br/>
+                    </form>
+                    <?php
+                    echo '<table class="table table-bordered table-striped bg-light border shadow mb-5 bg-white rounded">';
+                                echo "<thead>";
+                                    echo "<tr>";
+                                        echo "<th>email</th>";
+                                        echo "<th>domaine</th>";
+                                        echo "<th>code de retour</th>";
+                                        echo "<th>statut</th>";
+                                        echo "<th>date de vérification</th>";
+                                    echo "</tr>";
+                                echo "</thead>";
+                                echo "<tbody>";
+                                
+                                    echo "<tr>";
+                                        echo "<td>" . $_SESSION['email'] . "</td>";
+                                        echo "<td>" . $_SESSION['domaine'] . "</td>";
+                                        echo "<td>" . $_SESSION['code'] . "</td>";
+                                        echo "<td>" . $_SESSION['statut'] . "</td>";
+                                        echo "<td>" . $_SESSION['date'] . "</td>";
+                                    echo "</tr>";
+                        
+                                echo "</tbody>";                            
+                            echo "</table>";
+                            ?>
+                        <h2 class="pull-left">Valider un fichier d'emails</h2>
                         <form action="./Model/upload.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="btn btn-success pull-right">
+                            <input type="file" name="fileToUpload" id="fileToUpload" class="btn btn-primary pull-right">
                             <br/>
                             <br/>
                             <br/>
-                            <input type="submit" value="Upload TXT" name="submit" class="btn btn-success pull-right">
+                            <input type="submit" value="Upload TXT" name="submit" class="btn btn-primary pull-right">
                         </form>
                        
                     </div>
@@ -87,4 +130,9 @@
         </div>
     </div>
 </body>
+<footer>
+    <?php
+        include './View/footer.php';
+    ?>                
+</footer>
 </html>

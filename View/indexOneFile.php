@@ -27,9 +27,6 @@
     </script>
 </head>
 <body>
-    <?php
-        include './View/navbar.php';
-    ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -114,6 +111,6 @@
     </div>
 </body>
 <?php
-        include './View/footer.php';
+        include './footer.php';
     ?>
 </html>

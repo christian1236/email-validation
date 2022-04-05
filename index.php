@@ -106,7 +106,7 @@
                                         echo "<td>" . $row['dateAjout'] . "</td>";
                                         echo "<td>";
                                             echo '<a href="./View/read.php?id='. $row['id'] .'" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="./View/update.php?id='. $row['id'] .'" class="mr-3" title="Valider les emails Record" data-toggle="tooltip"><span class="fa fa-refresh"></span></a>';
+                                            echo '<a href="./Model/upload.php?id='.$row['id'].'" class="mr-3" title="Valider les emails Record" data-toggle="tooltip"><span class="fa fa-refresh"></span></a>';
                                             echo '<a href="./View/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
                                         echo "</td>";
                                     echo "</tr>";

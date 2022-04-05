@@ -1,33 +1,26 @@
 <?php
-/*
- * This function checks an email is really exists or not by performing 3 tests
-     
- * DESCRIPTION 
-    * Basic check for email format using reqular expression
-    * mxrecord check to validate whether user's domain handles emails
-    * incase given email passes above tests then it sends a smtp query with
-      given email to verify whether it really exists or not    
-
- **/
+  session_start();
 
 function isValidEmail($email){
-   // Include config file
- require_once "config.php";
-   $result=false;
-   
-   $dateVerif = date("l jS \of F Y h:i:s A");
 
-   # BASIC CHECK FOR EMAIL PATTERN WITH REGULAR EXPRESSION
+  // Include config file
+  include "config.php";
+
+  $result=false;
+   
+  $dateVerif = date("l jS \of F Y h:i:s A");
+
+   #Verification de la syntaxe à l'aide d'expressions régulières...
    if(!preg_match('/^[_A-z0-9-]+((\.|\+)[_A-z0-9-]+)*@[A-z0-9-]+(\.[A-z0-9-]+)*(\.[A-z]{2,4})$/',$email))
 	   return $result;
 
-   # MX RECORD CHECK
+   #Vérification à l'aide de MX Record
 	 list($name, $domain)=explode('@',$email);
 	
    if(!checkdnsrr($domain,'MX'))
 	  return $result;
 	
-   # SMTP QUERY CHECK
+   # Vérification requette SMTP
    $max_conn_time = 30;
    $sock='';
    $port = 25;
@@ -116,13 +109,7 @@ function isValidEmail($email){
           $param_statut = $statut;  
           $param_date = $dateVerif;
           // Attempt to execute the prepared statement
-          if(mysqli_stmt_execute($stmt)){
-              // Records created successfully. Redirect to landing page
-              header("location: ../index.php");
-              exit();
-          } else{
-              echo "Oops! Something went wrong. Please try again later.";
-          }
+          mysqli_stmt_execute($stmt);
       }
       // Close statement
       mysqli_stmt_close($stmt);
@@ -143,19 +130,29 @@ function isValidEmail($email){
 	 
 }
 
-$myfile = fopen("../Files/emails3.txt", "r") or die("Unable to open file!");
+$myfile = fopen("../Files/emails3 copie.txt", "r") or die("Unable to open file!");
+$nbre_mails=0;
+$nbre_mails_valides=0;
+$nbre_mails_invalides=0;
 
 while(!feof($myfile)) {
   $line = fgets($myfile);
   $email = rtrim($line,"\n");
   if(isValidEmail($email))
-    echo "**** EMAIL EXISTS ****";
+    $nbre_mails_valides++;
   else
-    echo "**** NOT A VALID EMAIL ****";
+    $nbre_mails_invalides++;
+    
+  $nbre_mails++ ;
 }
+
+$_SESSION['nbre'] = $nbre_mails;
+$_SESSION['nbreVal'] = $nbre_mails_valides;
+$_SESSION['nbreInv'] = $nbre_mails_invalides;
+
+        
+
 fclose($myfile);
 
-
-
-
+header("location: ./upload.php");
 ?>

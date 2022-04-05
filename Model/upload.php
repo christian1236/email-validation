@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $target_dir = "../Files/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
@@ -45,23 +47,27 @@ if ($uploadOk == 0) {
     echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
     if($_SERVER["REQUEST_METHOD"] == "POST"){
     $name = htmlspecialchars( basename( $_FILES["fileToUpload"]["name"]));
-    
+    $_SESSION['filename'] = $name;
     $dateAjout = date("l jS \of F Y h:i:s A");
     // Include config file
     require_once "config.php";
+    require_once "validate-mails.php";
     // Processing form data when form is submitted
     
 
         // Prepare an insert statement
-        $sql = "INSERT INTO files (nom, dateAjout) VALUES (?, ?)";
+        $sql = "INSERT INTO files (nom, dateAjout, nbre, nbreVal, nbreInv) VALUES (?, ?, ?, ?, ?)";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_name, $param_date);
+            mysqli_stmt_bind_param($stmt, "sssss", $param_name, $param_date, $param_nbre, $param_nbreVal, $param_nbreInv);
             
             // Set parameters
             $param_name = $name;
             $param_date = $dateAjout;
+            $param_nbre = $_SESSION['nbre'];
+            $param_nbreVal = $_SESSION['nbreVal'];
+            $param_nbreInv = $_SESSION['nbreInv'];
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
@@ -77,7 +83,6 @@ if ($uploadOk == 0) {
         mysqli_stmt_close($stmt);
         // Close connection
         mysqli_close($link);
-
     }
 
 

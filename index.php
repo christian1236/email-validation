@@ -1,6 +1,26 @@
 <?php
     //On démarre une nouvelle session
     session_start();
+    if(isset($_POST['records-limit'])){
+        $_SESSION['records-limit'] = $_POST['records-limit'];
+    }
+    
+    $limit = isset($_SESSION['records-limit']) ? $_SESSION['records-limit'] : 5;
+    $page = (isset($_GET['page']) && is_numeric($_GET['page']) ) ? $_GET['page'] : 1;
+    $paginationStart = ($page - 1) * $limit;
+    $sql0 = "SELECT * FROM files LIMIT $paginationStart, $limit";
+    $files = mysqli_query($link, $sql0);
+    // Get total records
+    // Attempt select query execution
+    $sql1 = "SELECT count(id) AS id FROM files";
+    $result = mysqli_query($link, $sql1);
+    $allRecrods = $result[0]['id'];
+    
+    // Calculate total pages 
+    $totoalPages = ceil($allRecrods / $limit);
+    // Prev + Next
+    $prev = $page - 1;
+    $next = $page + 1;
 ?>
 
 <!DOCTYPE html>
@@ -32,6 +52,7 @@
     <?php
         include './View/navbar.php';
     ?>
+    
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -80,6 +101,21 @@
                             <br/>
                             <input type="submit" value="Upload TXT" name="submit" class="btn btn-primary pull-right">
                         </form>
+                        <!-- Select dropdown -->
+                        <div class="d-flex flex-row-reverse bd-highlight mb-3">
+                                <form action="index.php" method="post">
+                                    <select name="records-limit" id="records-limit" class="custom-select">
+                                        <option disabled selected>Records Limit</option>
+                                        <?php foreach([5,7,10,12] as $limit) : ?>
+                                        <option
+                                            <?php if(isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
+                                            value="<?= $limit; ?>">
+                                            <?= $limit; ?>
+                                        </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </form>
+                            </div>
                        
                     </div>
                     <?php
@@ -106,8 +142,8 @@
                                         echo "<td>" . $row['dateAjout'] . "</td>";
                                         echo "<td>";
                                             echo '<a href="./View/read.php?id='. $row['id'] .'" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="./Model/upload.php?id='.$row['id'].'" class="mr-3" title="Valider les emails Record" data-toggle="tooltip"><span class="fa fa-refresh"></span></a>';
-                                            echo '<a href="./View/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+                                            echo '<a href="./Model/export_excel.php" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-download"></span></a>';
+                                            echo '<a href="./Model/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
                                         echo "</td>";
                                     echo "</tr>";
                                 }
@@ -123,12 +159,41 @@
                     }
  
                     // Close connection
-                    mysqli_close($link);
+                    // mysqli_close($link);
                     ?>
                 </div>
             </div>        
         </div>
     </div>
+    
+     <!-- Pagination -->
+     <nav aria-label="Page navigation example mt-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
+                    <a class="page-link"
+                        href="<?php if($page <= 1){ echo '#'; } else { echo "?page=" . $prev; } ?>">Previous</a>
+                </li>
+                <?php for($i = 1; $i <= $totoalPages; $i++ ): ?>
+                <li class="page-item <?php if($page == $i) {echo 'active'; } ?>">
+                    <a class="page-link" href="index.php?page=<?= $i; ?>"> <?= $i; ?> </a>
+                </li>
+                <?php endfor; ?>
+                <li class="page-item <?php if($page >= $totoalPages) { echo 'disabled'; } ?>">
+                    <a class="page-link"
+                        href="<?php if($page >= $totoalPages){ echo '#'; } else {echo "?page=". $next; } ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- jQuery + Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#records-limit').change(function () {
+                $('form').submit();
+            })
+        });
+    </script>
 </body>
 <footer>
     <?php

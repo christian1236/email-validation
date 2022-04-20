@@ -116,7 +116,7 @@ function isValidEmail($email){
           
           // Set parameters
           $param_email = $email;
-          $param_fichier = "emails3.txt";
+          $param_fichier = "LONELY";
           $param_domaine = $domain;
           $param_code = $code;
           $param_statut = $statut;  

@@ -11,7 +11,7 @@
              >
       <!-- Left -->
       <div class="me-5">
-        <span>Get connected with us on social networks:</span>
+        <span>Gardez le contact avec nous via les réseaux sociaux :</span>
       </div>
       <!-- Left -->
 

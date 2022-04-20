@@ -7,7 +7,10 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link text-white" href="#">Mail Tester<span class="sr-only">(current)</span></a>
+        <a class="nav-link text-white" href="../index.php">Mail Tester<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link text-white" href="./View/codesDesc.php">Codes SMTP<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white" href="#">Fonctionnalités</a>

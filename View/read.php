@@ -16,6 +16,9 @@
     </style>
 </head>
 <body>
+<?php
+        include './navbar.php';
+    ?>
     <div class="wrapper">
         <div class="container-fluid">
         <p><a href="../index.php" class="btn btn-primary">Back</a></p>
@@ -44,21 +47,16 @@
                     <div class="form-group">
                     <a href="./indexOneFile.php" class="btn btn-primary" type="button">
                         emails </br>
-                        <h2><span class="badge">5</span></h2>
+                        <h2><span class="badge"><?php echo $row["nbre"]; ?></span></h2>
                     </a>
                     <button class="btn btn-success" type="button">
                         valides </br>
-                        <h2><span class="badge">5</span></h2>
+                        <h2><span class="badge"><?php echo $row["nbreVal"]; ?></span></h2>
                     </button>
                     <button class="btn btn-danger" type="button">
                         Non valides </br>
-                        <h2><span class="badge">5</span></h2>
+                        <h2><span class="badge"><?php echo $row["nbreInv"]; ?></span></h2>
                     </button>
-                    <button class="btn btn-warning" type="button">
-                        Inconnus </br>
-                        <h2><span class="badge">5</span></h2>
-                    </button>
-                
                     </div>
                 </div>
             </div>

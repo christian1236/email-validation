@@ -27,6 +27,10 @@
     </script>
 </head>
 <body>
+
+    <?php
+        include './navbar.php';
+    ?>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">

@@ -9,7 +9,7 @@ if(isset($_GET['page']) && !empty($_GET['page'])){
 require_once "config.php";
 
 // On détermine le nombre total d'articles
-$sql = 'SELECT COUNT(*) AS nb_employees FROM `employees`;';
+$sql = 'SELECT COUNT(*) AS nb_employees FROM `files`;';
 
 // On prépare la requête
 $query = $db->prepare($sql);

@@ -40,8 +40,8 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     // Close statement
     mysqli_stmt_close($stmt);
     
-    // Close connection
-    mysqli_close($link);
+    // // Close connection
+    // mysqli_close($link);
 } else{
     // URL doesn't contain id parameter. Redirect to error page
     header("location: ../View/error.php");

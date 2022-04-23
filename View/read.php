@@ -16,7 +16,7 @@
     </style>
 </head>
 <body>
-<?php
+    <?php
         include './navbar.php';
     ?>
     <div class="wrapper">
@@ -64,11 +64,8 @@
                 <div class="p-3 bg-light border shadow mb-5 bg-white rounded">
                 <h2>Détails des emails</h2>
                 <?php
-                    // Include config file
-                    require_once "../Model/config.php";
-                    
                     // Attempt select query execution
-                    $sql2 = "SELECT * FROM emails";
+                    $sql2 = "SELECT * FROM files,emails WHERE fichierSource = 'emails3.txt' ORDER BY codeRetour";
                     if($result2 = mysqli_query($link, $sql2)){
                         if(mysqli_num_rows($result2) > 0){
                             echo '<table class="table table-bordered table-striped">';

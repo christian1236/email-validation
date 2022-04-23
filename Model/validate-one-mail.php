@@ -130,7 +130,7 @@ function isValidEmail($email){
               $_SESSION['code'] = $code;
               $_SESSION['statut'] = $statut;
               $_SESSION['date'] = $dateVerif;
-              header("location: ../index.php");
+              header("location: ./home.php");
               exit();
           } else{
               echo "Oops! Something went wrong. Please try again later.";

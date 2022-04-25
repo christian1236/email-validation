@@ -13,16 +13,16 @@
         <a class="nav-link text-white" href="./codesDesc.php">Codes SMTP<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white" href="#">Fonctionnalités</a>
+        <a class="nav-link text-white" href="./searchClient.php">Finder</a>
       </li>
       <li class="nav-item">
         <!-- <a class="nav-link disabled" href="#">A propos</a> -->
         <a class="nav-link text-white" href="#">A propos</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> -->
   </div>
 </nav>

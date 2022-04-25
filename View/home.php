@@ -99,13 +99,15 @@
                             <br/>
                             <br/>
                             <br/>
-                            <input type="submit" value="Upload TXT" name="submit" class="btn btn-primary pull-right">
+                            <input type="submit" value="Vérifier TXT" name="submit" class="btn btn-primary pull-right">
                         </form>
+                        </br>
+                        </br>
                         <!-- Select dropdown -->
                         <div class="d-flex flex-row-reverse bd-highlight mb-3">
                                 <form action="home.php" method="post">
                                     <select name="records-limit" id="records-limit" class="custom-select">
-                                        <option disabled selected>Records Limit</option>
+                                        <option disabled selected>limite</option>
                                         <?php foreach([5,7,10,12] as $limit) : ?>
                                         <option
                                             <?php if(isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>

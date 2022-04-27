@@ -21,7 +21,7 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
 // Check if file already exists
 if (file_exists($target_file)) {
-  echo "Sorry, file already exists.";
+  header("location: ../View/errorFileExist.php");
   $uploadOk = 0;
 }
 
@@ -33,7 +33,7 @@ if ($_FILES["fileToUpload"]["size"] > 500000) {
 
 // Allow certain file formats
 if($imageFileType != "txt") {
-  echo "Sorry, only TXT files are allowed.";
+  header("location: ../View/errorFileType.php");
   $uploadOk = 0;
 }
 

@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                    <p><a href="./read.php?id=1" class="btn btn-primary">Back</a></p>
+                    <p><a href="./read.php?id=1" class="btn btn-primary">Retour</a></p>
                         <h2 class="pull-left">Emails</h2>
                     </div>
                     <?php

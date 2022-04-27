@@ -10,6 +10,9 @@
         <a class="nav-link text-white" href="./home.php">Mail Tester<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
+        <a class="nav-link text-white" href="#">HLR Tester<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
         <a class="nav-link text-white" href="./codesDesc.php">Codes SMTP<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">

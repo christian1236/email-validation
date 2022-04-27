@@ -48,6 +48,8 @@
                             <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email">
                             <!-- <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais vos information à qui que ce soit.</small> -->
                             </br>
+                            <input type="adress" class="form-control" id="adress" name="adress" aria-describedby="adressHelp" placeholder="Adresse">
+                            </br>
                             <input type="phone" class="form-control" id="phone" name="phone" aria-describedby="phoneHelp" placeholder="Numéro de téléphone">
                             </br>
                             <button type="submit" class="btn btn-primary mb-2 pull-right">Lancer</button>

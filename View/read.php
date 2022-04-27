@@ -21,7 +21,7 @@
     ?>
     <div class="wrapper">
         <div class="container-fluid">
-        <p><a href="../index.php" class="btn btn-primary">Back</a></p>
+        <p><a href="./home.php" class="btn btn-primary">Retour</a></p>
             <div class="row mx-md-n5">
             <div class="col px-md-12">
                 <div class="p-3 bg-light border shadow mb-5 bg-white rounded">

@@ -44,14 +44,15 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
   if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-    echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+    //echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
     $name = htmlspecialchars( basename( $_FILES["fileToUpload"]["name"]));
     $_SESSION['filename'] = $name;
     $dateAjout = date("l jS \of F Y h:i:s A");
     // Include config file
-    require_once "config.php";
-    require_once "validate-mails.php";
+    require_once "./config.php";
+    require_once "./validate-mails.php";
     // Processing form data when form is submitted
     
 
@@ -72,7 +73,7 @@ if ($uploadOk == 0) {
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Records created successfully. Redirect to landing page
-                header("location: ./home.php");
+                header("location: ../View/home.php");
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";

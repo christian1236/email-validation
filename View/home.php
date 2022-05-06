@@ -41,6 +41,41 @@
         table tr td:last-child{
             width: 120px;
         }
+
+        #cover-spin {
+    position:fixed;
+    width:100%;
+    left:0;right:0;top:0;bottom:0;
+    background-color: rgba(255,255,255,0.7);
+    z-index:9999;
+    display:none;
+}
+
+@-webkit-keyframes spin {
+	from {-webkit-transform:rotate(0deg);}
+	to {-webkit-transform:rotate(360deg);}
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}
+
+#cover-spin::after {
+    content:'';
+    display:block;
+    position:absolute;
+    left:48%;top:40%;
+    width:125px;height:125px;
+    border-style:solid;
+    border-color:black;
+    border-top-color:transparent;
+    border-width: 20px;
+    border-radius:50%;
+    -webkit-animation: spin .8s linear infinite;
+    animation: spin .8s linear infinite;
+}
+
     </style>
     <script>
         $(document).ready(function(){
@@ -52,7 +87,7 @@
     <?php
         include './navbar.php';
     ?>
-    
+    <div id="cover-spin"></div>
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
@@ -99,7 +134,7 @@
                             <br/>
                             <br/>
                             <br/>
-                            <input type="submit" value="Vérifier TXT" name="submit" class="btn btn-primary pull-right">
+                            <input onclick="$('#cover-spin').show(0)" type="submit" value="Vérifier TXT" name="submit" class="btn btn-primary pull-right">
                         </form>
                         </br>
                         </br>
@@ -144,7 +179,7 @@
                                         echo "<td>" . $row['dateAjout'] . "</td>";
                                         echo "<td>";
                                             echo '<a href="./read.php?id='. $row['id'] .'" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="../Model/export_excel.php" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-download"></span></a>';
+                                            echo '<a href="../Model/export_excel.php" class="mr-3" title="exporter les détails" data-toggle="tooltip"><span class="fa fa-download"></span></a>';
                                             echo '<a href="../Model/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
                                         echo "</td>";
                                     echo "</tr>";

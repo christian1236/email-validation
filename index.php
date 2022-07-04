@@ -1,45 +1,129 @@
-<?php
-    //On démarre une nouvelle session
-    session_start();
-    if(isset($_POST['records-limit'])){
-        $_SESSION['records-limit'] = $_POST['records-limit'];
-    }
-    
-    $limit = isset($_SESSION['records-limit']) ? $_SESSION['records-limit'] : 5;
-    $page = (isset($_GET['page']) && is_numeric($_GET['page']) ) ? $_GET['page'] : 1;
-    $paginationStart = ($page - 1) * $limit;
-    $sql0 = "SELECT * FROM files LIMIT $paginationStart, $limit";
-    $files = mysqli_query($link, $sql0);
-    // Get total records
-    // Attempt select query execution
-    $sql1 = "SELECT count(id) AS id FROM files";
-    $result = mysqli_query($link, $sql1);
-    $allRecrods = $result[0]['id'];
-    
-    // Calculate total pages 
-    $totoalPages = ceil($allRecrods / $limit);
-    // Prev + Next
-    $prev = $page - 1;
-    $next = $page + 1;
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Accueil</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     <style>
-        .wrapper{
-            width: 600px;
-            margin: 0 auto;
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
         }
-        table tr td:last-child{
-            width: 120px;
+
+        /* Set a style for all buttons */
+        button {
+        background-color: #04AA6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        }
+
+        button:hover {
+        opacity: 0.8;
+        }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+        position: relative;
+        }
+
+        img.avatar {
+        width: 40%;
+        border-radius: 50%;
+        }
+
+        .container {
+        padding: 16px;
+        }
+
+        span.psw {
+        float: right;
+        padding-top: 16px;
+        }
+
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 60px;
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button (x) */
+        .close {
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+        color: red;
+        cursor: pointer;
+        }
+
+        /* Add Zoom Animation */
+        .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)} 
+        to {-webkit-transform: scale(1)}
+        }
+        
+        @keyframes animatezoom {
+        from {transform: scale(0)} 
+        to {transform: scale(1)}
+        }
+
+        /* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+        .cancelbtn {
+            width: 100%;
+        }
         }
     </style>
     <script>
@@ -52,148 +136,48 @@
     <?php
         include './View/navbar.php';
     ?>
-    
-    <div class="wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="mt-5 mb-3 clearfix">
-                            <h2 class="pull-left">Valider un email</h2>
-                    <form action="./Model/validate-one-mail.php" method="post" enctype="multipart/form-data">
-                        <div class="form-group mx-sm-3 mb-2">
-                            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
-                            <small id="emailHelp" class="form-text text-muted">Nous ne partagerons jamais vos information à qui que ce soit.</small>
-                            <button type="submit" class="btn btn-primary mb-2 pull-right">Vérifier</button>
-                        </div>
+    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
 
-                        <br/>
-                        <br/>
-                    </form>
-                    <?php
-                    echo '<table class="table table-bordered table-striped bg-light border shadow mb-5 bg-white rounded">';
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>email</th>";
-                                        echo "<th>domaine</th>";
-                                        echo "<th>code de retour</th>";
-                                        echo "<th>statut</th>";
-                                        echo "<th>date de vérification</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                
-                                    echo "<tr>";
-                                        echo "<td>" . $_SESSION['email'] . "</td>";
-                                        echo "<td>" . $_SESSION['domaine'] . "</td>";
-                                        echo "<td>" . $_SESSION['code'] . "</td>";
-                                        echo "<td>" . $_SESSION['statut'] . "</td>";
-                                        echo "<td>" . $_SESSION['date'] . "</td>";
-                                    echo "</tr>";
-                        
-                                echo "</tbody>";                            
-                            echo "</table>";
-                            ?>
-                        <h2 class="pull-left">Valider un fichier d'emails</h2>
-                        <form action="./Model/upload.php" method="post" enctype="multipart/form-data">
-                            <input type="file" name="fileToUpload" id="fileToUpload" class="btn btn-primary pull-right">
-                            <br/>
-                            <br/>
-                            <br/>
-                            <input type="submit" value="Upload TXT" name="submit" class="btn btn-primary pull-right">
-                        </form>
-                        <!-- Select dropdown -->
-                        <div class="d-flex flex-row-reverse bd-highlight mb-3">
-                                <form action="index.php" method="post">
-                                    <select name="records-limit" id="records-limit" class="custom-select">
-                                        <option disabled selected>Records Limit</option>
-                                        <?php foreach([5,7,10,12] as $limit) : ?>
-                                        <option
-                                            <?php if(isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
-                                            value="<?= $limit; ?>">
-                                            <?= $limit; ?>
-                                        </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </form>
-                            </div>
-                       
-                    </div>
-                    <?php
-                    // Include config file
-                    require_once "./Model/config.php";
-                    
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM files";
-                    if($result = mysqli_query($link, $sql)){
-                        if(mysqli_num_rows($result) > 0){
-                            echo '<table class="table table-bordered table-striped bg-light border shadow mb-5 bg-white rounded">';
-                                echo "<thead>";
-                                    echo "<tr>";
-                                        echo "<th>#</th>";
-                                        echo "<th>Nom</th>";
-                                        echo "<th>Date Ajout</th>";
-                                    echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while($row = mysqli_fetch_array($result)){
-                                    echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
-                                        echo "<td>" . $row['nom'] . "</td>";
-                                        echo "<td>" . $row['dateAjout'] . "</td>";
-                                        echo "<td>";
-                                            echo '<a href="./View/read.php?id='. $row['id'] .'" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="./Model/export_excel.php" class="mr-3" title="Voir les détails" data-toggle="tooltip"><span class="fa fa-download"></span></a>';
-                                            echo '<a href="./Model/delete.php?id='. $row['id'] .'" title="Supprimer le fichiers" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
-                                        echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";                            
-                            echo "</table>";
-                            // Free result set
-                            mysqli_free_result($result);
-                        } else{
-                            echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
-                        }
-                    } else{
-                        echo "Oops! Something went wrong. Please try again later.";
-                    }
- 
-                    // Close connection
-                    // mysqli_close($link);
-                    ?>
-                </div>
-            </div>        
-        </div>
-    </div>
+    <div id="id01" class="modal">
     
-     <!-- Pagination -->
-     <nav aria-label="Page navigation example mt-5">
-            <ul class="pagination justify-content-center">
-                <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page <= 1){ echo '#'; } else { echo "?page=" . $prev; } ?>">Previous</a>
-                </li>
-                <?php for($i = 1; $i <= $totoalPages; $i++ ): ?>
-                <li class="page-item <?php if($page == $i) {echo 'active'; } ?>">
-                    <a class="page-link" href="index.php?page=<?= $i; ?>"> <?= $i; ?> </a>
-                </li>
-                <?php endfor; ?>
-                <li class="page-item <?php if($page >= $totoalPages) { echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page >= $totoalPages){ echo '#'; } else {echo "?page=". $next; } ?>">Next</a>
-                </li>
-            </ul>
-        </nav>
+    <form class="modal-content animate" action="/action_page.php" method="post">
+        <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+            
+        <button type="submit">Login</button>
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+    </form>
     </div>
-    <!-- jQuery + Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
-        $(document).ready(function () {
-            $('#records-limit').change(function () {
-                $('form').submit();
-            })
-        });
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
     </script>
+
 </body>
 <footer>
     <?php

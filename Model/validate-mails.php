@@ -130,7 +130,7 @@ function isValidEmail($email){
 	 
 }
 
-$myfile = fopen("../Files/emails3.txt", "r") or die("Unable to open file!");
+$myfile = fopen("../Files/emails.txt", "r") or die("Unable to open file!");
 $nbre_mails=0;
 $nbre_mails_valides=0;
 $nbre_mails_invalides=0;

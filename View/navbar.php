@@ -34,7 +34,7 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-white" style="background-color:#F90B0B;">
+<nav class="navbar sticky-top navbar-expand-lg navbar-white" style="background-color:#F90B0B;">
   <a class="navbar-brand" href="./home.php"> <img src="../inc/PPP2022.png" width="150" alt="" class="d-inline-block align-middle mr-2"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>

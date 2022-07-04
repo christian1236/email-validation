@@ -21,6 +21,7 @@ function isValidEmail($email){
  require_once "config.php";
    $result=false;
    
+   
    $dateVerif = date("l jS \of F Y h:i:s A");
 
    # BASIC CHECK FOR EMAIL PATTERN WITH REGULAR EXPRESSION
@@ -30,11 +31,13 @@ function isValidEmail($email){
    # MX RECORD CHECK
 	 list($name, $domain)=explode('@',$email);
 	
-   if(!checkdnsrr($domain,'MX'))
-	  return $result;
+   if(!checkdnsrr($domain,'MX')){
+    return $result;
+   }
+	  
 	
    # SMTP QUERY CHECK
-   $max_conn_time = 30;
+   $max_conn_time = 15;
    $sock='';
    $port = 25;
    $max_read_time = 5;
@@ -101,8 +104,14 @@ function isValidEmail($email){
         $statut="valide";
         $result=true;
       }else{
+        
         $statut="non valide";
         $result=false;
+        $_SESSION['email'] = $email;
+        $_SESSION['domaine'] = $domain;
+        $_SESSION['code'] = $code;
+        $_SESSION['statut'] = $statut;
+        $_SESSION['date'] = $dateVerif;
       }
 
       
@@ -160,9 +169,9 @@ function isValidEmail($email){
 $email = $_POST['email'];
   
   if(isValidEmail($email))
-    echo "**** EMAIL EXISTS ****";
+    header("location: ../View/home.php");
   else
-    echo "**** NOT A VALID EMAIL ****";
+    header("location: ../View/home.php");
 
 
   

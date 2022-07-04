@@ -124,7 +124,6 @@
                                         echo "<td>" . $_SESSION['statut'] . "</td>";
                                         echo "<td>" . $_SESSION['date'] . "</td>";
                                     echo "</tr>";
-                        
                                 echo "</tbody>";                            
                             echo "</table>";
                             ?>
@@ -235,6 +234,7 @@
 <footer>
     <?php
         include './footer.php';
+        session_destroy();
     ?>                
 </footer>
 </html>
